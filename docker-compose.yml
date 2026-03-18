@@ -8,6 +8,8 @@ services:
       - TZ=Europe/London
     volumes:
       - 'budge-config:/config'
+    ports:
+      - '5000:5000'
     healthcheck:
       test:
         - CMD
