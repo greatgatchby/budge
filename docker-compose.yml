@@ -1,11 +1,19 @@
-version: '3'
 services:
-  dev-proxy:
-    image: ghcr.io/linuxserver/nginx
-    volumes:
-      - ./docker:/config
-      - ./:/app
+  budge:
+    image: 'lscr.io/linuxserver/budge:latest'
     environment:
-      PGID: 1000
-      PUID: 1000
-      TZ: America/New_York
+      - SERVICE_URL_BUDGE
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - 'budge-config:/config'
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - 'http://127.0.0.1:80'
+      interval: 2s
+      timeout: 10s
+      retries: 15
